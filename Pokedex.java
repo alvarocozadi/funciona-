@@ -18,8 +18,9 @@ public class Pokedex {
             System.out.println("5 - Criar uma pokebola");
             System.out.println("6 - Excluir uma pokebola");
             System.out.println("7 - Cadastrar uma nova habilidade");
-            System.out.println("8 - Excluir uma habilidade existente");
-            System.out.println("9 - Sair");
+            System.out.println("8 - Associar uma habilidade a um pokemon");
+            System.out.println("9 - Excluir uma habilidade existente");
+            System.out.println("10 - Sair");
             opcao = entrada.nextInt();
             switch (opcao) {
                 case 1: 
@@ -68,6 +69,15 @@ public class Pokedex {
                             System.out.println(pokemonParaImprimir.getPeso());
                             System.out.print("Altura:");
                             System.out.println(pokemonParaImprimir.getAltura());
+                            System.out.println("Habilidades:");
+                            
+                            
+                            for (int u=0; u < pokemonParaImprimir.getNumeroDeHabilidades(); u++){
+                                Habilidade habilidadeParaImprimir = pokemonParaImprimir.getHabilidade(u);
+                                System.out.println(habilidadeParaImprimir.getNome());
+                                
+                                
+                            }
                         } 
                     }    
                     } else {
@@ -78,7 +88,7 @@ public class Pokedex {
                     System.out.print("Digite o nome do pokemon que deseja remover:");
                     nomePokemon = entrada.next();
                     if (meuCadastro.contemPokemon(nomePokemon)){
-                      for (int i=0 ; i < meuCadastro.getNumeroDePokemons(); i++){
+                      for (int i=0 ; i <= meuCadastro.getNumeroDePokemons(); i++){
                         Pokemon pokemonParaRemover = (Pokemon) meuCadastro.getPokemon(i);
                         if (nomePokemon.equals(pokemonParaRemover.getNome())){
                             meuCadastro.removePokemon(nomePokemon); 
@@ -90,24 +100,92 @@ public class Pokedex {
                     
                     break;
                 case 5 : 
+                    System.out.println("Digite o tipo de pokebola a ser inserido");
+                    String tipoDePokebola = entrada.next();
+                    System.out.println("Digite o nivel maximo de Pokemon que esta pokebola pode conter");
+                    int nivelMaximo = entrada.nextInt();
+                    
+                    Pokebola novaPokebola = new Pokebola(tipoDePokebola, nivelMaximo);
+                    
+                    
+                    
+                    
+                    System.out.println("Pokebola criada com sucesso!");
+                    
+                    
+                    
+                    
+                    
+                    
                     
                     break;
                 case 6 : 
                     
                     break;
                 case 7 : 
-                    
+                    System.out.println("Digitar um nome para a habilidade a ser cadastrada:");
+                    String nomeHabilidade;
+                    nomeHabilidade = entrada.next();
+                    System.out.println("Digite um tipo para esta habilidade:");
+                    String tipoHabilidade;
+                    tipoHabilidade = entrada.next();
+                    System.out.println("Digite um dano base para esta habilidade:");
+                    int danoBase;
+                    danoBase = entrada.nextInt();
+                    Habilidade novaHabilidade = new Habilidade (nomeHabilidade, tipoHabilidade, danoBase);
+                    meuCadastro.addHabilidade(novaHabilidade);
+                    System.out.println("Habilidade adicionada com sucesso");
                     break;
-                case 8 : 
+                case 8 :
+                    System.out.println("Escolha o pokemon ao qual deseja adicionar a habilidade:");
+                    for (int i=0 ; i < meuCadastro.getNumeroDePokemons(); i++){
+                        List listaParaPercorrer = meuCadastro.getListaDePokemons();
+                        Pokemon pokemonParaImprimir = (Pokemon) listaParaPercorrer.get(i);
+                        System.out.println(pokemonParaImprimir.getNome());
+                    }
+                    String pokemonEscolhido = entrada.next();
+                    System.out.println("Escolha a habilidade que deseja adicionar à este pokemon:");
+                    for (int i=0 ; i < meuCadastro.getNumeroDeHabilidades(); i++){
+                        List listaParaPercorrer = meuCadastro.getListaDeHabilidades();
+                        Habilidade habilidadeParaImprimir = (Habilidade) listaParaPercorrer.get(i);
+                        System.out.println(habilidadeParaImprimir.getNome());
+                    }
+                    String habilidadeEscolhida = entrada.next();
+                    
+                    meuCadastro.associarPokemonComHabilidade(pokemonEscolhido, habilidadeEscolhida);
+                    
+                    
+                    
+                    
+                    
                     
                     break;
                     
                 case 9 : 
                     
+                    System.out.print("Digite o nome da habilidade que deseja remover:");
+                    nomeHabilidade = entrada.next();
+                    if (meuCadastro.contemHabilidade(nomeHabilidade)){
+                      for (int i=0 ; i <= meuCadastro.getNumeroDeHabilidades(); i++){
+                        Habilidade habilidadeParaRemover = (Habilidade) meuCadastro.getHabilidade(i);
+                        if (nomeHabilidade.equals(habilidadeParaRemover.getNome())){
+                            meuCadastro.removeHabilidade(nomeHabilidade); 
+                        }  
+                    } 
+                    } else {
+                            System.out.println("Esta habilidade não existe no cadastro.");
+                            } 
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     break;
 
             } 
-        } while (opcao != 9);
+        } while (opcao != 10);
         
         
         
